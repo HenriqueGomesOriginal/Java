@@ -10,8 +10,8 @@ public class Paddle extends Breakout{
 	private static final long serialVersionUID = 3L;
 	public float x, y;
 	private double xVel;
-	private double gravity=0.85;
-	public int width=70, height=10;
+	private double gravity = 0.85;
+	public int width = 70, height = 10;
 	
 	public Paddle() {
 		

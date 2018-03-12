@@ -10,9 +10,9 @@ public class Ball extends Breakout{
 	 * 
 	 */
 	private static final long serialVersionUID = 2L;
-	private int width=7, height=7;
+	private int width = 7, height = 7;
 	private Random rand;
-	public float x, y, xVel=2, yVel=2;
+	public float x, y, xVel = 2, yVel = 2;
 	
 	public Ball(){	
 		
@@ -27,20 +27,20 @@ public class Ball extends Breakout{
 		if(paddle.getY() <= y + height && paddle.getY() >= y - height) {
 			if((x >= paddle.getX()) && (x <= paddle.getX() + paddle.width)) {
 				if(yVel > 0) {
-					xVel+= rand.nextFloat() - 0.5;
+					xVel += rand.nextFloat() - 0.5;
 				}
-				yVel*=-1;
+				yVel *= -1;
 			}
 		} else {
 			
 			// Walls collision
 			if(x <= 0) {
-				xVel*=-1;
+				xVel *= -1;
 			} else if(x >= breakout.getWidth() - width) {
-				xVel*=-1;
+				xVel *= -1;
 			}
 			if(y <= 0) {
-				yVel*=-1;
+				yVel *= -1;
 			}  else if(y >= 420) {
 				breakout.life--;
 				Reset();
@@ -51,9 +51,9 @@ public class Ball extends Breakout{
 		// Blocks collision
 		if(breakout.Collision()) {
 			if(breakout.side == true) {
-				xVel*=-1;
+				xVel *= -1;
 			} else {
-				yVel*=-1;
+				yVel *= -1;
 			}
 		} 
 		
@@ -65,10 +65,10 @@ public class Ball extends Breakout{
 		
 		this.x = breakout.getWidth() / 2;
 		this.y = breakout.getHeight() - 35;
-		xVel = 2;
-		yVel = 2;
-		xVel*=-1;
-		yVel*=-1;
+		this.xVel = 2;
+		this.yVel = 2;
+		this.xVel *= -1;
+		this.yVel *= -1;
 	}
 	
 	public void Render(Graphics g) {

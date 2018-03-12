@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 
 public class Blocks {
 	public int x, y;
-	private int width=40, height=12;
+	private int width = 40, height = 12;
 
 	public Blocks(int x, int y) {
 		this.x = x;

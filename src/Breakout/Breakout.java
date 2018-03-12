@@ -1,5 +1,11 @@
 package Breakout;
 
+/**
+ * Autor: Henrique Gomes
+ * This isn't a clone of the original Breakout, I'm using the same idea,
+ * it's a reconstruction in java of that game.
+ */
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -12,17 +18,12 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class Breakout extends Canvas implements Runnable, KeyListener{
-	
-	/**
-	 * Autor: Henrique Gomes
-	 * This isn't a clone of the original Breakout, I'm using the same idea,
-	 * it's a reconstruction in java of that game.
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
-	public static final int width=420, height=420;
+	public static final int width = 420, height = 420;
 	private boolean Running;
-	public int life=3;
+	public int life = 3;
 	private int MAX_BLOCKS = 44, score; 
 	public boolean side, GameOver=false;
 	
@@ -40,6 +41,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		addKeyListener(this);
 	}
 	
+	// Start is a preparing for the game loop
 	private void Start() {
 	
 		if(Running) return;
@@ -53,15 +55,16 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 	
 	private void Create_Blocks() {
 		
-		int x=10, y=10, count=0;
+		int x = 10, y = 10;
+		int count = 0;
 		
 		// Position of blocks
-		for(int i=0; i <= MAX_BLOCKS; i++) {
+		for(int i = 0; i <= MAX_BLOCKS; i++) {
 			if(i%9 == 0) {
 				count = 0;
 				y += 22;
 			}
-			blocks.add(i, new Blocks(x + (45*count), y));
+			blocks.add(i, new Blocks(x + (45 * count), y));
 			count++;
 		}
 	}
@@ -77,11 +80,13 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		frame.setVisible(true);
 	}
 	
+	// Takes care about the Graphics...
 	public void Render() {
 		BufferStrategy bs = getBufferStrategy();
 		
 		if(bs == null) {
 			
+			// Create a triple buffer
 			createBufferStrategy(3);
 			return;
 		}
@@ -93,7 +98,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		g.fillRect(0, 0, width, height);
 		// Score
 		g.setColor(Color.yellow);
-		g.drawString(""+score, 20, 20);
+		g.drawString("" + score, 20, 20);
 		// Life count
 		for(int i=0; i <= life; i++) {
 			if(i == 1) g.fillRect(50, 15, 5, 5);
@@ -117,6 +122,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		bs.show();
 	}
 	
+	// Tick is the responsible of update the game
 	public void Tick() {
 		
 		if(GameOver) return;
@@ -126,6 +132,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		if(life == 0) GameOver = true;
 	}
 
+	// Game loop
 	public void run() {
 		int fps = 0, tps = 60;
 		long wait = 1000/tps;
@@ -138,7 +145,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 			Render();
 			Tick();
 			
-			// FPS Count
+			// This counts the frames per second 
 			fps++;
 			if(lastTime >= clock + 1000) {
 				System.out.println("FPS: "+fps);
@@ -150,7 +157,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 			
 			lastTick = System.currentTimeMillis();
 			
-			// Cap fps method
+			// Lock the fps
 			if (wait > lastTick - tickStart) {
 				try {
 					Thread.sleep(wait - (lastTick - tickStart));
@@ -162,6 +169,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		}
 	}
 	
+	// Detect collision intersecting arrays of position.
 	public boolean Collision() {
 		
 		//See if exist blocks, else reset the game
@@ -194,6 +202,7 @@ public class Breakout extends Canvas implements Runnable, KeyListener{
 		return false;
 	}
 
+	// Simply keyListenner methods...
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
